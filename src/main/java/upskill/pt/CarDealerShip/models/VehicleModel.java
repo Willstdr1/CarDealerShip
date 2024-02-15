@@ -2,6 +2,7 @@ package upskill.pt.CarDealerShip.models;
 
 import jakarta.persistence.*;
 
+@Entity
 public class VehicleModel {
 
     @Id

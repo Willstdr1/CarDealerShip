@@ -1,6 +1,11 @@
 package upskill.pt.CarDealerShip.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class License {
+    @Id
     private String licenseNumber;
 
     public License(String licenseNumber) {

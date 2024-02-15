@@ -1,11 +1,20 @@
 package upskill.pt.CarDealerShip.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
 public class Condition {
     // estados permitidos
     public enum ConditionType {
         NEW,
         USED
     }
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     private ConditionType condition;
     private int kilometers;

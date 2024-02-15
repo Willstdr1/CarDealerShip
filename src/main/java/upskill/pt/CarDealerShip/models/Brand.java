@@ -1,7 +1,12 @@
 package upskill.pt.CarDealerShip.models;
 
-public class Brand {
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+public class Brand {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String Name;
 

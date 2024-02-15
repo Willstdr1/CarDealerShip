@@ -1,14 +1,19 @@
 package upskill.pt.CarDealerShip.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import upskill.pt.CarDealerShip.enums.FuelEnum;
 import upskill.pt.CarDealerShip.enums.StatusEnum;
 import upskill.pt.CarDealerShip.enums.TractionEnum;
 import upskill.pt.CarDealerShip.enums.TypeEnum;
 
+@Entity
 public class Vehicle {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private Brand brand;
     private VehicleModel model;
     private License licensePlate;
     private int numberOfSeats;
@@ -20,9 +25,11 @@ public class Vehicle {
     private StatusEnum status;
     private Suplier suplier;
 
-    public Vehicle(int id, Brand brand, VehicleModel model, License licensePlate, int numberOfSeats, TractionEnum traction, FuelEnum fuel, String color, int numberOfDoors, TypeEnum type, StatusEnum status, Suplier suplier) {
+    private Condition condition;
+    private double kilometers;
+
+    public Vehicle(int id, VehicleModel model, License licensePlate, int numberOfSeats, TractionEnum traction, FuelEnum fuel, String color, int numberOfDoors, TypeEnum type, StatusEnum status, Suplier suplier, Condition condition, double kilometers) {
         this.id = id;
-        this.brand = brand;
         this.model = model;
         this.licensePlate = licensePlate;
         this.numberOfSeats = numberOfSeats;
@@ -33,14 +40,14 @@ public class Vehicle {
         this.type = type;
         this.status = status;
         this.suplier = suplier;
+        this.condition = condition;
+        this.kilometers = kilometers;
     }
 
     public int getId() {
         return id;
     }
-    public Brand getBrand() {
-        return brand;
-    }
+
     public VehicleModel getModel() {
         return model;
     }
@@ -79,13 +86,17 @@ public class Vehicle {
         return suplier;
     }
 
+    public Condition getCondition() {
+        return condition;
+    }
+
+    public double getKilometers() {
+        return kilometers;
+    }
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
 
     public void setModel(VehicleModel model) {
         this.model = model;
@@ -127,4 +138,11 @@ public class Vehicle {
         this.suplier = suplier;
     }
 
+    public void setCondition(Condition condition) {
+        this.condition = condition;
+    }
+
+    public void setKilometers(double kilometers) {
+        this.kilometers = kilometers;
+    }
 }

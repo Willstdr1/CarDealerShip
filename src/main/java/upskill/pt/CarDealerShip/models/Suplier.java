@@ -20,6 +20,9 @@ public class Suplier {
         PhoneNumber = phoneNumber;
     }
 
+    public Suplier() {
+    }
+
     public int getId() {
         return id;
     }

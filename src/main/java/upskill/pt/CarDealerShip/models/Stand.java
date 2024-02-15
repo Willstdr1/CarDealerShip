@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity
+//@Entity
 public class Stand {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,6 +20,9 @@ public class Stand {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.emailAdress = emailAdress;
+    }
+
+    public Stand() {
     }
 
     public int getId() {

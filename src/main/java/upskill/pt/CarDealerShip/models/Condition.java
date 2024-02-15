@@ -25,6 +25,9 @@ public class Condition {
         this.kilometers = kilometers;
     }
 
+    public Condition() {
+    }
+
     public ConditionType getCondition() {
         return condition;
     }

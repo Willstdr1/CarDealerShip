@@ -1,9 +1,6 @@
 package upskill.pt.CarDealerShip.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import upskill.pt.CarDealerShip.enums.FuelEnum;
 import upskill.pt.CarDealerShip.enums.StatusEnum;
 import upskill.pt.CarDealerShip.enums.TractionEnum;
@@ -14,21 +11,27 @@ public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @ManyToOne
     private VehicleModel model;
+    @OneToOne
     private License licensePlate;
     private int numberOfSeats;
+    @Enumerated
     private TractionEnum traction;
+    @Enumerated
     private FuelEnum fuel;
     private String color;
     private int numberOfDoors;
+    @Enumerated
     private TypeEnum type;
+    @Enumerated
     private StatusEnum status;
+    @OneToOne
     private Suplier suplier;
-
+    @OneToOne
     private Condition condition;
-    private double kilometers;
 
-    public Vehicle(int id, VehicleModel model, License licensePlate, int numberOfSeats, TractionEnum traction, FuelEnum fuel, String color, int numberOfDoors, TypeEnum type, StatusEnum status, Suplier suplier, Condition condition, double kilometers) {
+    public Vehicle(int id, VehicleModel model, License licensePlate, int numberOfSeats, TractionEnum traction, FuelEnum fuel, String color, int numberOfDoors, TypeEnum type, StatusEnum status, Suplier suplier, Condition condition) {
         this.id = id;
         this.model = model;
         this.licensePlate = licensePlate;
@@ -41,7 +44,9 @@ public class Vehicle {
         this.status = status;
         this.suplier = suplier;
         this.condition = condition;
-        this.kilometers = kilometers;
+    }
+
+    public Vehicle() {
     }
 
     public int getId() {
@@ -90,9 +95,6 @@ public class Vehicle {
         return condition;
     }
 
-    public double getKilometers() {
-        return kilometers;
-    }
     public void setId(int id) {
         this.id = id;
     }
@@ -142,7 +144,4 @@ public class Vehicle {
         this.condition = condition;
     }
 
-    public void setKilometers(double kilometers) {
-        this.kilometers = kilometers;
-    }
 }

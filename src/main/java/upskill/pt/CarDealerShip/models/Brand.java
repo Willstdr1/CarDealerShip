@@ -15,6 +15,8 @@ public class Brand {
         Name = name;
     }
 
+    public Brand(){}
+
     public int getId() {
         return id;
     }

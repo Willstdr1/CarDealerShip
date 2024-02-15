@@ -11,6 +11,9 @@ public class License {
         }
     }
 
+    public License() {
+    }
+
     private boolean isValidLicenseNumber(String licenseNumber) {
         // Verifica se tem o formato "XX-XX-XX"
         return licenseNumber.matches("^\\w{2}-\\w{2}-\\w{2}$");

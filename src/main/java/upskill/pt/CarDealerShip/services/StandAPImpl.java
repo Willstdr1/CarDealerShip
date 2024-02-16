@@ -38,7 +38,8 @@ public class StandAPImpl implements StandAPI{
             a[0]=page*100-100;
             a[1]=page*100-1;
         }
-        return storage.findAll().subList(a[0],a[1]) ;
+
+        return storage.findAll().subList(a[0],Math.min(a[1] + 1, storage.findAll().size())) ;
     }
 
     @Override
@@ -66,6 +67,7 @@ public class StandAPImpl implements StandAPI{
                 veic.setStatus(vehicle.getStatus());
                 veic.setSuplier(vehicle.getSuplier());
                 veic.setCondition(vehicle.getCondition());
+                veic.setStand(vehicle.getStand());
             }
             storage.save(veic);
             return veic;
@@ -74,28 +76,36 @@ public class StandAPImpl implements StandAPI{
     }
 
     @Override
-    public Vehicle DeleteVehicle(Vehicle vehicle) {
-        if (storage.existsById(vehicle.getId())){
-            storage.delete(vehicle);
-            return vehicle;
-        }else {
-        throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
+    public Vehicle DeleteVehicle(int id) {
+        if (storage.existsById(id)) {
+            Vehicle v = storage.findById(id).orElse(null);
+            if (v != null) {
+                storage.delete(v);
+                return v;
+            } else {
+                throw new EntityNotFoundException("Vehicle with ID " + id + " not found.");
+            }
+        } else {
+            throw new EntityNotFoundException("Vehicle with ID " + id + " not found.");
         }
     }
 
+
     @Override
-    public Vehicle ChangeVehicleStatus(Vehicle vehicle, StatusEnum newStatus) {
-        if(storage.existsById(vehicle.getId())){
+    public Vehicle ChangeVehicleStatus (Vehicle vehicle, StatusEnum newStatus){
+        if (storage.existsById(vehicle.getId())) {
             Vehicle existVehicle = storage.findById(vehicle.getId()).orElse(null);
-        if(existVehicle!=null){
-            existVehicle.setStatus(newStatus);
-            return storage.save(existVehicle);
-        }else {
-            throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
-        }
+            if (existVehicle != null) {
+                existVehicle.setStatus(newStatus);
+                return storage.save(existVehicle);
+            } else {
+                throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
+            }
         } else {
             throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
         }
     }
+
+
 
 }

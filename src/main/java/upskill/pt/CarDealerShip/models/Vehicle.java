@@ -1,20 +1,16 @@
 package upskill.pt.CarDealerShip.models;
 
 import jakarta.persistence.*;
-import upskill.pt.CarDealerShip.enums.FuelEnum;
-import upskill.pt.CarDealerShip.enums.StatusEnum;
-import upskill.pt.CarDealerShip.enums.TractionEnum;
-import upskill.pt.CarDealerShip.enums.TypeEnum;
+import upskill.pt.CarDealerShip.enums.*;
 
 @Entity
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private VehicleModel model;
-    @OneToOne
-    private License licensePlate;
+    private String licensePlate;
     private int numberOfSeats;
     @Enumerated
     private TractionEnum traction;
@@ -28,10 +24,12 @@ public class Vehicle {
     private StatusEnum status;
     @OneToOne
     private Suplier suplier;
-    @OneToOne
-    private Condition condition;
+    @Enumerated
+    private ConditionEnum condition;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Stand stand;
 
-    public Vehicle(int id, VehicleModel model, License licensePlate, int numberOfSeats, TractionEnum traction, FuelEnum fuel, String color, int numberOfDoors, TypeEnum type, StatusEnum status, Suplier suplier, Condition condition) {
+    public Vehicle(int id, VehicleModel model, String licensePlate, int numberOfSeats, TractionEnum traction, FuelEnum fuel, String color, int numberOfDoors, TypeEnum type, StatusEnum status, Suplier suplier, ConditionEnum condition, Stand stand) {
         this.id = id;
         this.model = model;
         this.licensePlate = licensePlate;
@@ -44,7 +42,9 @@ public class Vehicle {
         this.status = status;
         this.suplier = suplier;
         this.condition = condition;
+        this.stand = stand;
     }
+
 
     public Vehicle() {
     }
@@ -56,7 +56,7 @@ public class Vehicle {
     public VehicleModel getModel() {
         return model;
     }
-    public License getLicensePlate() {
+    public String getLicensePlate() {
         return licensePlate;
     }
     public int getNumberOfSeats() {
@@ -91,8 +91,16 @@ public class Vehicle {
         return suplier;
     }
 
-    public Condition getCondition() {
+    public ConditionEnum getCondition() {
         return condition;
+    }
+
+    public Stand getStand() {
+        return stand;
+    }
+
+    public void setStand(Stand stand) {
+        this.stand = stand;
     }
 
     public void setId(int id) {
@@ -104,7 +112,7 @@ public class Vehicle {
         this.model = model;
     }
 
-    public void setLicensePlate(License licensePlate) {
+    public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
     }
 
@@ -140,8 +148,8 @@ public class Vehicle {
         this.suplier = suplier;
     }
 
-    public void setCondition(Condition condition) {
-        this.condition = condition;
+    public void setCondition(ConditionEnum conditionEnum) {
+        this.condition = conditionEnum;
     }
 
 }

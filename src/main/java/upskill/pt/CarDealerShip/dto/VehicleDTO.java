@@ -1,7 +1,7 @@
 package upskill.pt.CarDealerShip.dto;
 
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
+import upskill.pt.CarDealerShip.enums.ConditionEnum;
 import upskill.pt.CarDealerShip.enums.FuelEnum;
 import upskill.pt.CarDealerShip.enums.StatusEnum;
 import upskill.pt.CarDealerShip.enums.TypeEnum;
@@ -11,15 +11,15 @@ public class VehicleDTO extends RepresentationModel<VehicleDTO> {
 
     private int id;
     private VehicleModel model;
-    private License licensePlate;
+    private String licensePlate;
     private FuelEnum fuel;
     private TypeEnum type;
     private StatusEnum status;
     private Suplier suplier;
-    private Condition condition;
+    private ConditionEnum conditionEnum;
     private double kilometers;
 
-    public VehicleDTO(int id, VehicleModel model, License licensePlate, FuelEnum fuel, TypeEnum type, StatusEnum status, Suplier suplier, Condition condition, double kilometers) {
+    public VehicleDTO(int id, VehicleModel model, String licensePlate, FuelEnum fuel, TypeEnum type, StatusEnum status, Suplier suplier, ConditionEnum conditionEnum, double kilometers) {
         this.id = id;
         this.model = model;
         this.licensePlate = licensePlate;
@@ -27,7 +27,7 @@ public class VehicleDTO extends RepresentationModel<VehicleDTO> {
         this.type = type;
         this.status = status;
         this.suplier = suplier;
-        this.condition = condition;
+        this.conditionEnum = conditionEnum;
         this.kilometers = kilometers;
     }
 
@@ -39,7 +39,7 @@ public class VehicleDTO extends RepresentationModel<VehicleDTO> {
         return model;
     }
 
-    public License getLicensePlate() {
+    public String getLicensePlate() {
         return licensePlate;
     }
 
@@ -59,11 +59,8 @@ public class VehicleDTO extends RepresentationModel<VehicleDTO> {
         return suplier;
     }
 
-    public Condition getCondition() {
-        return condition;
+    public ConditionEnum getCondition() {
+        return conditionEnum;
     }
 
-    public double getKilometers() {
-        return kilometers;
-    }
 }

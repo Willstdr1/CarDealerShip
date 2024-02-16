@@ -33,8 +33,8 @@ public class StandController {
 
     }
 
-    @PostMapping(value= "/vehicle/{vehicle}", produces = "application/json")
-    public ResponseEntity<Vehicle> buyVehicle(@PathVariable("vehicle")Vehicle vehicle){
+    @PostMapping(value= "/vehicle", consumes = "application/json", produces = "aplication/json")
+    public ResponseEntity<Vehicle> buyVehicle(@RequestBody Vehicle vehicle){
         storage.BuyVehicle(vehicle);
         return new ResponseEntity<>(vehicle, HttpStatus.OK);
     }
@@ -47,11 +47,11 @@ public class StandController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping(value= "/vehicle/{vehicle}", produces = "aplication/json")
-    public ResponseEntity<Vehicle> deleteVehicle(@PathVariable("vehicle") Vehicle vehicle){
-        if (vehicle!=null){
-            storage.DeleteVehicle(vehicle);
-                return new ResponseEntity<>(vehicle, HttpStatus.OK);
+    @DeleteMapping(value= "/vehicle/{id}", produces = "aplication/json")
+    public ResponseEntity<Vehicle> deleteVehicle(@PathVariable("id") int id){
+        if (id>=0){
+            storage.DeleteVehicle(id);
+                return new ResponseEntity<>(storage.DeleteVehicle(id), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

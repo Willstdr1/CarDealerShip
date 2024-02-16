@@ -11,7 +11,7 @@ public interface StandAPI {
     public List<Vehicle> ListVehicles(int page);
     public Vehicle ListVehicle(int id);
     public Vehicle UpdateVehicle(Vehicle vehicle);
-    public Vehicle DeleteVehicle(Vehicle vehicle);
+    public Vehicle DeleteVehicle(int id);
     public Vehicle ChangeVehicleStatus(Vehicle vehicle, StatusEnum status);
 /*    public Suplier AddSuplier(Suplier suplier);
     public Suplier ListSuplier();

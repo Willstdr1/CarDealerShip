@@ -1,9 +1,6 @@
 package upskill.pt.CarDealerShip.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Stand {
@@ -14,12 +11,15 @@ public class Stand {
     public int phoneNumber;
     public String emailAdress;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Suplier suplier;
 
-    public Stand(int id, String name, int phoneNumber, String emailAdress) {
-        this.id=id;
+    public Stand(int id, String name, int phoneNumber, String emailAdress, Suplier suplier) {
+        this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.emailAdress = emailAdress;
+        this.suplier = suplier;
     }
 
     public Stand() {
@@ -40,6 +40,11 @@ public class Stand {
         return phoneNumber;
     }
 
+    public Suplier getSuplier() {
+        return suplier;
+    }
+
+
     public void setPhoneNumber(int phoneNumber) {
         phoneNumber = phoneNumber;
     }
@@ -50,5 +55,8 @@ public class Stand {
 
     public void setEmailAdress(String emailAdress) {
         emailAdress = emailAdress;
+    }
+    public void setSuplier(Suplier suplier) {
+        this.suplier = suplier;
     }
 }

@@ -22,7 +22,7 @@ public class StandController {
         List<Vehicle> v = storage.ListVehicles(page);
 
         return new ResponseEntity<>(v, HttpStatus.OK);
-        //ToDo: exexecon
+        //ToDo: exexon
     }
 
     @GetMapping(value= "/vehicle/{id}", produces = "application/json")
@@ -32,7 +32,7 @@ public class StandController {
 
     }
 
-    @PutMapping(value= "/vehicle/{vehicle}", produces = "application/json")
+    @PostMapping(value= "/vehicle/{vehicle}", produces = "application/json")
     public ResponseEntity<Vehicle> buyVehicle(@PathVariable("vehicle")Vehicle vehicle){
         storage.BuyVehicle(vehicle);
         return new ResponseEntity<>(vehicle, HttpStatus.OK);

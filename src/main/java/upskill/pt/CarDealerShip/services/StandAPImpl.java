@@ -1,5 +1,6 @@
 package upskill.pt.CarDealerShip.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,18 +51,37 @@ public class StandAPImpl implements StandAPI{
     }
 
     @Override
-    public Vehicle UpdateVehicle(int id, Vehicle vehicle) {
-        return null;
+    public Vehicle UpdateVehicle(Vehicle vehicle) {
+        if (storage.existsById(vehicle.getId())){
+            storage.save(vehicle);
+            return vehicle;
+        }
+        throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
     }
 
     @Override
-    public Vehicle DeleteVehicle(int id, Vehicle vehicle) {
-        return null;
+    public Vehicle DeleteVehicle(Vehicle vehicle) {
+        if (storage.existsById(vehicle.getId())){
+            storage.delete(vehicle);
+            return vehicle;
+        }else {
+        throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
+        }
     }
 
     @Override
-    public Vehicle ChangeVehicleStatus(int id, StatusEnum status) {
-        return null;
+    public Vehicle ChangeVehicleStatus(Vehicle vehicle, StatusEnum newStatus) {
+        if(storage.existsById(vehicle.getId())){
+            Vehicle existVehicle = storage.findById(vehicle.getId()).orElse(null);
+        if(existVehicle!=null){
+            existVehicle.setStatus(newStatus);
+            return storage.save(existVehicle);
+        }else {
+            throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
+        }
+        } else {
+            throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
+        }
     }
 
 }

@@ -10,9 +10,9 @@ public interface StandAPI {
     public void BuyVehicle(Vehicle vehicle); //create
     public List<Vehicle> ListVehicles(int page);
     public Vehicle ListVehicle(int id);
-    public Vehicle UpdateVehicle(int id, Vehicle vehicle);
-    public Vehicle DeleteVehicle(int id, Vehicle vehicle);
-    public Vehicle ChangeVehicleStatus(int id, StatusEnum status);
+    public Vehicle UpdateVehicle(Vehicle vehicle);
+    public Vehicle DeleteVehicle(Vehicle vehicle);
+    public Vehicle ChangeVehicleStatus(Vehicle vehicle, StatusEnum status);
 /*    public Suplier AddSuplier(Suplier suplier);
     public Suplier ListSuplier();
     public Suplier UpdateSuplier(int id, Suplier suplier);

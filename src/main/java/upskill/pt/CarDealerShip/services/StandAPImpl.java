@@ -53,8 +53,22 @@ public class StandAPImpl implements StandAPI{
     @Override
     public Vehicle UpdateVehicle(Vehicle vehicle) {
         if (storage.existsById(vehicle.getId())){
-            storage.save(vehicle);
-            return vehicle;
+            Vehicle veic = storage.findById(vehicle.getId()).orElse(null);
+            if( veic != null){
+                veic.setModel(vehicle.getModel());
+                veic.setLicensePlate(vehicle.getLicensePlate());
+                veic.setNumberOfSeats(vehicle.getNumberOfSeats());
+                veic.setTraction(vehicle.getTraction());
+                veic.setFuel(vehicle.getFuel());
+                veic.setColor(vehicle.getColor());
+                veic.setNumberOfDoors(vehicle.getNumberOfDoors());
+                veic.setType(vehicle.getType());
+                veic.setStatus(vehicle.getStatus());
+                veic.setSuplier(vehicle.getSuplier());
+                veic.setCondition(vehicle.getCondition());
+            }
+            storage.save(veic);
+            return veic;
         }
         throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
     }

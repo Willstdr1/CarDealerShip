@@ -5,22 +5,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import upskill.pt.CarDealerShip.models.Vehicle;
-import upskill.pt.CarDealerShip.models.VehicleModel;
-import upskill.pt.CarDealerShip.services.StandAPI;
-import upskill.pt.CarDealerShip.services.StandAPImpl;
-import upskill.pt.CarDealerShip.services.repos.VehicleRepository;
+import upskill.pt.CarDealerShip.services.VehicleApi;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/")
-public class StandController {
+public class VehicleController {
     @Autowired
-    StandAPImpl storage;
+    VehicleApi storage; // não precisa de ter o nome do "StandAPImpl" ele sabe por causa da interface
 
     @GetMapping(value= "/vehicles/{page}", produces = "application/json")
     public ResponseEntity<List<Vehicle>> getVehicles(@PathVariable("page") int page){
-        List<Vehicle> v = storage.ListVehicles(page);
+        List<Vehicle> v = storage.listVehicles(page);
 
         return new ResponseEntity<>(v, HttpStatus.OK);
         //ToDo: exexon
@@ -29,20 +26,20 @@ public class StandController {
     @GetMapping(value= "/vehicle/{id}", produces = "application/json")
     public ResponseEntity<Vehicle> getVehicle(@PathVariable("id")int id){
 
-        return new ResponseEntity<> (storage.ListVehicle(id), HttpStatus.OK);
+        return new ResponseEntity<> (storage.listVehicle(id), HttpStatus.OK);
 
     }
 
     @PostMapping(value= "/vehicle", consumes = "application/json", produces = "aplication/json")
     public ResponseEntity<Vehicle> buyVehicle(@RequestBody Vehicle vehicle){
-        storage.BuyVehicle(vehicle);
+        storage.createVehicle(vehicle);
         return new ResponseEntity<>(vehicle, HttpStatus.OK);
     }
 
     @PutMapping(value= "/vehicle/{id}", produces = "application/json")
     public ResponseEntity<Vehicle> updateVehicle(@PathVariable("id")int id, @RequestBody Vehicle vehicle){
         if(vehicle.getId()==id){
-            return new ResponseEntity<>(storage.UpdateVehicle(vehicle), HttpStatus.OK);
+            return new ResponseEntity<>(storage.updateVehicle(vehicle), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -50,8 +47,8 @@ public class StandController {
     @DeleteMapping(value= "/vehicle/{id}", produces = "aplication/json")
     public ResponseEntity<Vehicle> deleteVehicle(@PathVariable("id") int id){
         if (id>=0){
-            storage.DeleteVehicle(id);
-                return new ResponseEntity<>(storage.DeleteVehicle(id), HttpStatus.OK);
+            storage.deleteVehicle(id);
+                return new ResponseEntity<>(storage.deleteVehicle(id), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

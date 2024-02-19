@@ -15,18 +15,18 @@ public class VehicleDTO extends RepresentationModel<VehicleDTO> {
     private FuelEnum fuel;
     private TypeEnum type;
     private StatusEnum status;
-    private Suplier suplier;
+    private Supplier supplier;
     private ConditionEnum conditionEnum;
     private double kilometers;
 
-    public VehicleDTO(int id, VehicleModel model, String licensePlate, FuelEnum fuel, TypeEnum type, StatusEnum status, Suplier suplier, ConditionEnum conditionEnum, double kilometers) {
+    public VehicleDTO(int id, VehicleModel model, String licensePlate, FuelEnum fuel, TypeEnum type, StatusEnum status, Supplier supplier, ConditionEnum conditionEnum, double kilometers) {
         this.id = id;
         this.model = model;
         this.licensePlate = licensePlate;
         this.fuel = fuel;
         this.type = type;
         this.status = status;
-        this.suplier = suplier;
+        this.supplier = supplier;
         this.conditionEnum = conditionEnum;
         this.kilometers = kilometers;
     }
@@ -55,8 +55,8 @@ public class VehicleDTO extends RepresentationModel<VehicleDTO> {
         return status;
     }
 
-    public Suplier getSuplier() {
-        return suplier;
+    public Supplier getSuplier() {
+        return supplier;
     }
 
     public ConditionEnum getCondition() {

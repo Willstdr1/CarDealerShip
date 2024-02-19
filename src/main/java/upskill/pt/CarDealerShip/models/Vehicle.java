@@ -23,13 +23,13 @@ public class Vehicle {
     @Enumerated
     private StatusEnum status;
     @OneToOne
-    private Suplier suplier;
+    private Supplier supplier;
     @Enumerated
     private ConditionEnum condition;
     @ManyToOne(cascade = CascadeType.ALL)
     private Stand stand;
 
-    public Vehicle(int id, VehicleModel model, String licensePlate, int numberOfSeats, TractionEnum traction, FuelEnum fuel, String color, int numberOfDoors, TypeEnum type, StatusEnum status, Suplier suplier, ConditionEnum condition, Stand stand) {
+    public Vehicle(int id, VehicleModel model, String licensePlate, int numberOfSeats, TractionEnum traction, FuelEnum fuel, String color, int numberOfDoors, TypeEnum type, StatusEnum status, Supplier supplier, ConditionEnum condition, Stand stand) {
         this.id = id;
         this.model = model;
         this.licensePlate = licensePlate;
@@ -40,9 +40,11 @@ public class Vehicle {
         this.numberOfDoors = numberOfDoors;
         this.type = type;
         this.status = status;
-        this.suplier = suplier;
+        this.supplier = supplier;
         this.condition = condition;
         this.stand = stand;
+        //ToDo: id comprador e id transação
+
     }
 
 
@@ -87,8 +89,8 @@ public class Vehicle {
         return status;
     }
 
-    public Suplier getSuplier() {
-        return suplier;
+    public Supplier getSuplier() {
+        return supplier;
     }
 
     public ConditionEnum getCondition() {
@@ -144,8 +146,8 @@ public class Vehicle {
         this.status = status;
     }
 
-    public void setSuplier(Suplier suplier) {
-        this.suplier = suplier;
+    public void setSuplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
     public void setCondition(ConditionEnum conditionEnum) {

@@ -11,17 +11,17 @@ import upskill.pt.CarDealerShip.services.repos.VehicleRepository;
 import java.util.List;
 
 @Service
-public class StandAPImpl implements StandAPI{
+public class VehicleImpl implements VehicleApi {
 
     @Autowired
     VehicleRepository storage;
 
-    public StandAPImpl(VehicleRepository storage){
+    public VehicleImpl(VehicleRepository storage){
     this.storage = storage;
     }
 
     @Override
-    public void BuyVehicle(Vehicle vehicle) {
+    public void createVehicle(Vehicle vehicle) {
         if(storage.existsById(vehicle.getId())){
             throw new NotImplementedException();
         }
@@ -30,7 +30,7 @@ public class StandAPImpl implements StandAPI{
     }
 
     @Override
-    public List<Vehicle> ListVehicles(int page) {
+    public List<Vehicle> listVehicles(int page) {
         int[] a = new int []{0,0};
         if(page==1){
             a[1]=99;
@@ -43,7 +43,7 @@ public class StandAPImpl implements StandAPI{
     }
 
     @Override
-    public Vehicle ListVehicle(int id) {
+    public Vehicle listVehicle(int id) {
         if (storage.existsById(id)) {
             return storage.findById(id).get();
         }else {
@@ -52,7 +52,7 @@ public class StandAPImpl implements StandAPI{
     }
 
     @Override
-    public Vehicle UpdateVehicle(Vehicle vehicle) {
+    public Vehicle updateVehicle(Vehicle vehicle) {
         if (storage.existsById(vehicle.getId())){
             Vehicle veic = storage.findById(vehicle.getId()).orElse(null);
             if( veic != null){
@@ -76,7 +76,7 @@ public class StandAPImpl implements StandAPI{
     }
 
     @Override
-    public Vehicle DeleteVehicle(int id) {
+    public Vehicle deleteVehicle(int id) {
         if (storage.existsById(id)) {
             Vehicle v = storage.findById(id).orElse(null);
             if (v != null) {

@@ -12,14 +12,14 @@ public class Stand {
     public String emailAdress;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    private Suplier suplier;
+    private Supplier supplier;
 
-    public Stand(int id, String name, int phoneNumber, String emailAdress, Suplier suplier) {
+    public Stand(int id, String name, int phoneNumber, String emailAdress, Supplier supplier) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.emailAdress = emailAdress;
-        this.suplier = suplier;
+        this.supplier = supplier;
     }
 
     public Stand() {
@@ -40,8 +40,8 @@ public class Stand {
         return phoneNumber;
     }
 
-    public Suplier getSuplier() {
-        return suplier;
+    public Supplier getSuplier() {
+        return supplier;
     }
 
 
@@ -56,7 +56,7 @@ public class Stand {
     public void setEmailAdress(String emailAdress) {
         emailAdress = emailAdress;
     }
-    public void setSuplier(Suplier suplier) {
-        this.suplier = suplier;
+    public void setSuplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 }

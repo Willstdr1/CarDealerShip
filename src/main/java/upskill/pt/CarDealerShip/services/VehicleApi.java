@@ -12,7 +12,12 @@ public interface VehicleApi {
     public Vehicle updateVehicle(Vehicle vehicle);
     public Vehicle deleteVehicle(int id);
     public Vehicle changeVehicleStatus(Vehicle vehicle, StatusEnum status);
+    public Vehicle markVeAsSold(Vehicle vehicle);
+    public List<Vehicle> ListVehiclesInStock();
+    public List<Vehicle> ListVehiclesSold();
+    public List<Vehicle> ListVehiclesBought();
+    public List<Vehicle> ListVehiclesAsProcessing();
 
-    /*public Vehicle buyVehicle();*/
+
 
 }

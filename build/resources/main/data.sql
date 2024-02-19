@@ -8,7 +8,7 @@ INSERT INTO Stand (id, Phone_Number, Supplier_Id, email_Adress, name) VALUES (1,
 INSERT INTO Brand (id, name) VALUES (1, 'Opel');
 
 
-INSERT INTO Vehicle_Model (brand_id, id, name) VALUES (1, 1, 'corsa');
+INSERT INTO Vehicle_Model (brand_id, id, name) VALUES (1, 1, 'Corsa');
 
 
-INSERT INTO Vehicle (condition, fuel, id, model_id, number_of_doors, number_of_seats, stand_id, status, supplier_id, traction, type, color, license_plate) VALUES (0, 2, 1, 1, 4, 5, 1, 2, 1, 1, 1,'amarelo', 'AA-01-AA');
+INSERT INTO Vehicle (condition, fuel, id, model_id, number_of_doors, number_of_seats, stand_id, status, supplier_id, traction, type, color, license_plate) VALUES (0, 2, 1, 1, 4, 5, 1, 2, 1, 1, 1,'amarelo', '16-OE-61');

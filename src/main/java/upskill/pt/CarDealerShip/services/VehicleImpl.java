@@ -8,6 +8,7 @@ import upskill.pt.CarDealerShip.enums.StatusEnum;
 import upskill.pt.CarDealerShip.models.Vehicle;
 import upskill.pt.CarDealerShip.services.repos.VehicleRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -77,7 +78,7 @@ public class VehicleImpl implements VehicleApi {
 
     @Override
     public Vehicle deleteVehicle(int id) {
-        if (storage.existsById(id)) {
+     //   if (storage.existsById(id)) {
             Vehicle v = storage.findById(id).orElse(null);
             if (v != null) {
                 storage.delete(v);
@@ -85,15 +86,15 @@ public class VehicleImpl implements VehicleApi {
             } else {
                 throw new EntityNotFoundException("Vehicle with ID " + id + " not found.");
             }
-        } else {
+  /*      } else {
             throw new EntityNotFoundException("Vehicle with ID " + id + " not found.");
-        }
+        }*/
     }
 
 
     @Override
     public Vehicle changeVehicleStatus(Vehicle vehicle, StatusEnum newStatus){
-        if (storage.existsById(vehicle.getId())) {
+     //   if (storage.existsById(vehicle.getId())) {
             Vehicle existVehicle = storage.findById(vehicle.getId()).orElse(null);
             if (existVehicle != null) {
                 existVehicle.setStatus(newStatus);
@@ -101,11 +102,70 @@ public class VehicleImpl implements VehicleApi {
             } else {
                 throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
             }
-        } else {
+/*        } else {
             throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
-        }
+        }*/
+    }
+
+    @Override
+    public Vehicle markVeAsSold(Vehicle vehicle){
+       // if (storage.existsById(vehicle.getId())) {
+            Vehicle existVehicle = storage.findById(vehicle.getId()).orElse(null);
+            StatusEnum[] statusValues = StatusEnum.values();
+            if (existVehicle != null) {
+                existVehicle.setStatus(statusValues[3]); // valor do enum sold
+                return storage.save(existVehicle);
+            } else {
+                throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
+            }
+       /* } else {
+            throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
+        }*/
     }
 
 
+    @Override
+    public List<Vehicle> ListVehiclesInStock() {
+        List<Vehicle> vehiclesInStock = new ArrayList<>();
+        for (Vehicle vehicle : storage.findAll()) {
+            if (vehicle.getStatus().ordinal() == 2) {
+                vehiclesInStock.add(vehicle);
+            }
+        }
+        return vehiclesInStock;
+    }
+
+    @Override
+    public List<Vehicle> ListVehiclesSold() {
+        List<Vehicle> vehiclesSold = new ArrayList<>();
+        for (Vehicle vehicle : storage.findAll()) {
+            if (vehicle.getStatus().ordinal() == 3) {
+                vehiclesSold.add(vehicle);
+            }
+        }
+        return vehiclesSold;
+    }
+
+    @Override
+    public List<Vehicle> ListVehiclesBought() {
+        List<Vehicle> vehiclesBought = new ArrayList<>();
+        for (Vehicle vehicle : storage.findAll()) {
+            if (vehicle.getStatus().ordinal() == 0) {
+                vehiclesBought.add(vehicle);
+            }
+        }
+        return vehiclesBought;
+    }
+
+    @Override
+    public List<Vehicle> ListVehiclesAsProcessing() {
+        List<Vehicle> vehiclesProcessing = new ArrayList<>();
+        for (Vehicle vehicle : storage.findAll()) {
+            if (vehicle.getStatus().ordinal() == 1) {
+                vehiclesProcessing.add(vehicle);
+            }
+        }
+        return vehiclesProcessing;
+    }
 
 }

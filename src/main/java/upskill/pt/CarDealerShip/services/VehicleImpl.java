@@ -92,7 +92,7 @@ public class VehicleImpl implements VehicleApi {
 
 
     @Override
-    public Vehicle ChangeVehicleStatus (Vehicle vehicle, StatusEnum newStatus){
+    public Vehicle changeVehicleStatus(Vehicle vehicle, StatusEnum newStatus){
         if (storage.existsById(vehicle.getId())) {
             Vehicle existVehicle = storage.findById(vehicle.getId()).orElse(null);
             if (existVehicle != null) {

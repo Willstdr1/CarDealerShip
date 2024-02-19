@@ -11,8 +11,8 @@ public interface VehicleApi {
     public Vehicle listVehicle(int id);
     public Vehicle updateVehicle(Vehicle vehicle);
     public Vehicle deleteVehicle(int id);
-    public Vehicle ChangeVehicleStatus(Vehicle vehicle, StatusEnum status);
+    public Vehicle changeVehicleStatus(Vehicle vehicle, StatusEnum status);
 
-    /*public Vehicle BuyVehicle();*/
+    /*public Vehicle buyVehicle();*/
 
 }

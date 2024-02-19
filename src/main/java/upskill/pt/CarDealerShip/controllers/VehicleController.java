@@ -31,7 +31,7 @@ public class VehicleController {
     }
 
     @PostMapping(value= "/vehicle", consumes = "application/json", produces = "aplication/json")
-    public ResponseEntity<Vehicle> buyVehicle(@RequestBody Vehicle vehicle){
+    public ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle){
         storage.createVehicle(vehicle);
         return new ResponseEntity<>(vehicle, HttpStatus.OK);
     }

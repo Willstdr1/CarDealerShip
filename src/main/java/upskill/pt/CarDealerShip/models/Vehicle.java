@@ -22,7 +22,7 @@ public class Vehicle {
     private TypeEnum type;
     @Enumerated
     private StatusEnum status;
-    @OneToOne
+    @ManyToOne
     private Supplier supplier;
     @Enumerated
     private ConditionEnum condition;

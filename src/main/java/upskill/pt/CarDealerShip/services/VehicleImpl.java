@@ -93,23 +93,18 @@ public class VehicleImpl implements VehicleApi {
 
 
     @Override
-    public Vehicle changeVehicleStatus(Vehicle vehicle, StatusEnum newStatus){
-     //   if (storage.existsById(vehicle.getId())) {
-            Vehicle existVehicle = storage.findById(vehicle.getId()).orElse(null);
-            if (existVehicle != null) {
-                existVehicle.setStatus(newStatus);
-                return storage.save(existVehicle);
-            } else {
-                throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
-            }
-/*        } else {
-            throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
-        }*/
+    public Vehicle changeVehicleStatus(int id, StatusEnum newStatus) {
+        Vehicle existVehicle = storage.findById(id).orElse(null);
+        if (existVehicle != null) {
+            existVehicle.setStatus(newStatus);
+            return storage.save(existVehicle);
+        } else {
+            throw new EntityNotFoundException("Vehicle with ID " + id + " not found.");
+        }
     }
 
-    @Override
-    public Vehicle markVeAsSold(Vehicle vehicle){
-       // if (storage.existsById(vehicle.getId())) {
+/*    @Override
+    public Vehicle markVeAsSold(int id, StatusEnum newStatus){
             Vehicle existVehicle = storage.findById(vehicle.getId()).orElse(null);
             StatusEnum[] statusValues = StatusEnum.values();
             if (existVehicle != null) {
@@ -118,10 +113,17 @@ public class VehicleImpl implements VehicleApi {
             } else {
                 throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
             }
-       /* } else {
-            throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
-        }*/
+    }*/
+
+    @Override
+    public Vehicle markVeAsSold(int id, StatusEnum newStatus) {
+        Vehicle existVehicle = storage.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("Vehicle with ID " + id + " not found."));
+
+        existVehicle.setStatus(newStatus);
+        return storage.save(existVehicle);
     }
+
 
 
     @Override
@@ -168,4 +170,7 @@ public class VehicleImpl implements VehicleApi {
         return vehiclesProcessing;
     }
 
+
+    //@Transactional ou vai tudo ou nada da info
+    //@Getter @Setter @NoArgsConstructor @AllArgsConstructor -> lombok atalhos para menos work
 }

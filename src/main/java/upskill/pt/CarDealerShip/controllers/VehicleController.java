@@ -1,9 +1,11 @@
 package upskill.pt.CarDealerShip.controllers;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import upskill.pt.CarDealerShip.enums.StatusEnum;
 import upskill.pt.CarDealerShip.models.Vehicle;
 import upskill.pt.CarDealerShip.services.VehicleApi;
 
@@ -51,6 +53,56 @@ public class VehicleController {
                 return new ResponseEntity<>(storage.deleteVehicle(id), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping(value= "/vehicle/{id}/status", produces = "application/json")
+    public ResponseEntity<Vehicle> changeVehicleStatus(@PathVariable("id") int id, @RequestBody StatusEnum newStatus){
+        try {
+            Vehicle updatedVehicle = storage.changeVehicleStatus(id, newStatus);
+            return new ResponseEntity<>(updatedVehicle, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping(value= "/vehicle/{id}/sold", produces = "application/json")
+    public ResponseEntity<Vehicle> markVehicleAsSold(@PathVariable("id") int id, @RequestBody StatusEnum newStatus) {
+        try {
+            Vehicle updatedVehicle = storage.markVeAsSold(id, newStatus);
+            return new ResponseEntity<>(updatedVehicle, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping(value= "/vehicles/stock", produces = "application/json")
+    public ResponseEntity<List<Vehicle>> ListVehiclesInStock() {
+        List<Vehicle> v = storage.ListVehiclesInStock();
+        return new ResponseEntity<>(v, HttpStatus.OK);
+    }
+
+    @GetMapping(value= "/vehicles/sold", produces = "application/json")
+    public ResponseEntity<List<Vehicle>> ListVehiclesSold(){
+        List<Vehicle> v = storage.ListVehiclesSold();
+
+        return new ResponseEntity<>(v, HttpStatus.OK);
+        //ToDo: exexon
+    }
+
+    @GetMapping(value= "/vehicles/bought", produces = "application/json")
+    public ResponseEntity<List<Vehicle>> ListVehiclesBought(){
+        List<Vehicle> v = storage.ListVehiclesBought();
+
+        return new ResponseEntity<>(v, HttpStatus.OK);
+        //ToDo: exexon
+    }
+
+    @GetMapping(value= "/vehicles/processing", produces = "application/json")
+    public ResponseEntity<List<Vehicle>> ListVehiclesAsProcessing(){
+        List<Vehicle> v = storage.ListVehiclesAsProcessing();
+
+        return new ResponseEntity<>(v, HttpStatus.OK);
+        //ToDo: exexon
     }
 
 }

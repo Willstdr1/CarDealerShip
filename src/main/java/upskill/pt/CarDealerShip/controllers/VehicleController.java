@@ -2,19 +2,16 @@ package upskill.pt.CarDealerShip.controllers;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import upskill.pt.CarDealerShip.dto.StatusDTO;
-import upskill.pt.CarDealerShip.enums.StatusEnum;
 import upskill.pt.CarDealerShip.models.Vehicle;
 import upskill.pt.CarDealerShip.services.VehicleApi;
 
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/")
@@ -83,30 +80,30 @@ public class VehicleController {
     }
 
     @GetMapping(value= "/vehicles/stock", produces = "application/json")
-    public ResponseEntity<List<Vehicle>> ListVehiclesInStock() {
-        List<Vehicle> v = storage.ListVehiclesInStock();
+    public ResponseEntity<List<Vehicle>> listVehiclesInStock() {
+        List<Vehicle> v = storage.listVehiclesInStock();
         return new ResponseEntity<>(v, HttpStatus.OK);
     }
 
     @GetMapping(value= "/vehicles/sold", produces = "application/json")
-    public ResponseEntity<List<Vehicle>> ListVehiclesSold(){
-        List<Vehicle> v = storage.ListVehiclesSold();
+    public ResponseEntity<List<Vehicle>> listVehiclesSold(){
+        List<Vehicle> v = storage.listVehiclesSold();
 
         return new ResponseEntity<>(v, HttpStatus.OK);
         //ToDo: exexon
     }
 
     @GetMapping(value= "/vehicles/bought", produces = "application/json")
-    public ResponseEntity<List<Vehicle>> ListVehiclesBought(){
-        List<Vehicle> v = storage.ListVehiclesBought();
+    public ResponseEntity<List<Vehicle>> listVehiclesBought(){
+        List<Vehicle> v = storage.listVehiclesBought();
 
         return new ResponseEntity<>(v, HttpStatus.OK);
         //ToDo: exexon
     }
 
     @GetMapping(value= "/vehicles/processing", produces = "application/json")
-    public ResponseEntity<List<Vehicle>> ListVehiclesAsProcessing(){
-        List<Vehicle> v = storage.ListVehiclesAsProcessing();
+    public ResponseEntity<List<Vehicle>> listVehiclesAsProcessing(){
+        List<Vehicle> v = storage.listVehiclesAsProcessing();
 
         return new ResponseEntity<>(v, HttpStatus.OK);
         //ToDo: exexon

@@ -1,6 +1,7 @@
 package upskill.pt.CarDealerShip.services;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,7 @@ public class VehicleImpl implements VehicleApi {
         }
     }
 
+    @Transactional
     @Override
     public Vehicle updateVehicle(Vehicle vehicle) {
         if (storage.existsById(vehicle.getId())){
@@ -76,6 +78,7 @@ public class VehicleImpl implements VehicleApi {
         throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
     }
 
+    @Transactional
     @Override
     public Vehicle deleteVehicle(int id) {
      //   if (storage.existsById(id)) {
@@ -92,6 +95,7 @@ public class VehicleImpl implements VehicleApi {
     }
 
 
+    @Transactional
     @Override
     public Vehicle changeVehicleStatus(int id, StatusEnum newStatus) {
         Vehicle existVehicle = storage.findById(id).orElse(null);
@@ -115,6 +119,7 @@ public class VehicleImpl implements VehicleApi {
             }
     }*/
 
+    @Transactional
     @Override
     public Vehicle markVeAsSold(int id) {
         Vehicle existVehicle = storage.findById(id).orElseThrow(() ->
@@ -126,7 +131,7 @@ public class VehicleImpl implements VehicleApi {
 
 
     @Override
-    public List<Vehicle> ListVehiclesInStock() {
+    public List<Vehicle> listVehiclesInStock() {
         List<Vehicle> vehiclesInStock = new ArrayList<>();
         for (Vehicle vehicle : storage.findAll()) {
             if (vehicle.getStatus().ordinal() == 2) {
@@ -137,7 +142,7 @@ public class VehicleImpl implements VehicleApi {
     }
 
     @Override
-    public List<Vehicle> ListVehiclesSold() {
+    public List<Vehicle> listVehiclesSold() {
         List<Vehicle> vehiclesSold = new ArrayList<>();
         for (Vehicle vehicle : storage.findAll()) {
             if (vehicle.getStatus().ordinal() == 3) {
@@ -148,7 +153,7 @@ public class VehicleImpl implements VehicleApi {
     }
 
     @Override
-    public List<Vehicle> ListVehiclesBought() {
+    public List<Vehicle> listVehiclesBought() {
         List<Vehicle> vehiclesBought = new ArrayList<>();
         for (Vehicle vehicle : storage.findAll()) {
             if (vehicle.getStatus().ordinal() == 0) {
@@ -159,7 +164,7 @@ public class VehicleImpl implements VehicleApi {
     }
 
     @Override
-    public List<Vehicle> ListVehiclesAsProcessing() {
+    public List<Vehicle> listVehiclesAsProcessing() {
         List<Vehicle> vehiclesProcessing = new ArrayList<>();
         for (Vehicle vehicle : storage.findAll()) {
             if (vehicle.getStatus().ordinal() == 1) {

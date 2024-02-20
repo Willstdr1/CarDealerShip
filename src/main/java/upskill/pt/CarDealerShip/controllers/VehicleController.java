@@ -2,20 +2,25 @@ package upskill.pt.CarDealerShip.controllers;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import upskill.pt.CarDealerShip.dto.StatusDTO;
 import upskill.pt.CarDealerShip.enums.StatusEnum;
 import upskill.pt.CarDealerShip.models.Vehicle;
 import upskill.pt.CarDealerShip.services.VehicleApi;
 
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/api/")
 public class VehicleController {
     @Autowired
-    VehicleApi storage; // não precisa de ter o nome do "StandAPImpl" ele sabe por causa da interface
+    VehicleApi storage; // não precisa de ter o nome do "VehicleApi" o nome da interface é melhor
 
     @GetMapping(value= "/vehicles/{page}", produces = "application/json")
     public ResponseEntity<List<Vehicle>> getVehicles(@PathVariable("page") int page){
@@ -55,20 +60,22 @@ public class VehicleController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+
     @PutMapping(value= "/vehicle/{id}/status", produces = "application/json")
-    public ResponseEntity<Vehicle> changeVehicleStatus(@PathVariable("id") int id, @RequestBody StatusEnum newStatus){
+    public ResponseEntity<Vehicle> changeVehicleStatus(@PathVariable("id") int id, @RequestBody StatusDTO newStatus){
         try {
-            Vehicle updatedVehicle = storage.changeVehicleStatus(id, newStatus);
+            Vehicle updatedVehicle = storage.changeVehicleStatus(id, newStatus.getStatus());
             return new ResponseEntity<>(updatedVehicle, HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+
     @PutMapping(value= "/vehicle/{id}/sold", produces = "application/json")
-    public ResponseEntity<Vehicle> markVehicleAsSold(@PathVariable("id") int id, @RequestBody StatusEnum newStatus) {
+    public ResponseEntity<Vehicle> markVehicleAsSold(@PathVariable("id") int id) {
         try {
-            Vehicle updatedVehicle = storage.markVeAsSold(id, newStatus);
+            Vehicle updatedVehicle = storage.markVeAsSold(id);
             return new ResponseEntity<>(updatedVehicle, HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();

@@ -12,7 +12,7 @@ public interface VehicleApi {
     public Vehicle updateVehicle(Vehicle vehicle);
     public Vehicle deleteVehicle(int id);
     public Vehicle changeVehicleStatus(int id, StatusEnum newStatus);
-    public Vehicle markVeAsSold(int id, StatusEnum newStatus);
+    public Vehicle markVeAsSold(int id);
     public List<Vehicle> ListVehiclesInStock();
     public List<Vehicle> ListVehiclesSold();
     public List<Vehicle> ListVehiclesBought();

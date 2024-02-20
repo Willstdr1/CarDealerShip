@@ -116,11 +116,10 @@ public class VehicleImpl implements VehicleApi {
     }*/
 
     @Override
-    public Vehicle markVeAsSold(int id, StatusEnum newStatus) {
+    public Vehicle markVeAsSold(int id) {
         Vehicle existVehicle = storage.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Vehicle with ID " + id + " not found."));
-
-        existVehicle.setStatus(newStatus);
+        existVehicle.setStatus(StatusEnum.SOLD);
         return storage.save(existVehicle);
     }
 

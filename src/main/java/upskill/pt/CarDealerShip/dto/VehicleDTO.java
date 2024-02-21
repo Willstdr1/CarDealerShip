@@ -1,66 +1,40 @@
 package upskill.pt.CarDealerShip.dto;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
-import upskill.pt.CarDealerShip.enums.ConditionEnum;
-import upskill.pt.CarDealerShip.enums.FuelEnum;
-import upskill.pt.CarDealerShip.enums.StatusEnum;
-import upskill.pt.CarDealerShip.enums.TypeEnum;
+import upskill.pt.CarDealerShip.enums.*;
 import upskill.pt.CarDealerShip.models.*;
-
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class VehicleDTO extends RepresentationModel<VehicleDTO> {
 
-    private int id;
-    private VehicleModel model;
-    private String licensePlate;
-    private FuelEnum fuel;
-    private TypeEnum type;
-    private StatusEnum status;
-    private Supplier supplier;
-    private ConditionEnum conditionEnum;
-    private double kilometers;
 
-    public VehicleDTO(int id, VehicleModel model, String licensePlate, FuelEnum fuel, TypeEnum type, StatusEnum status, Supplier supplier, ConditionEnum conditionEnum, double kilometers) {
-        this.id = id;
-        this.model = model;
-        this.licensePlate = licensePlate;
-        this.fuel = fuel;
-        this.type = type;
-        this.status = status;
-        this.supplier = supplier;
-        this.conditionEnum = conditionEnum;
-        this.kilometers = kilometers;
-    }
 
-    public int getId() {
-        return id;
-    }
+    int id;
+    VehicleModel model;
+    String licensePlate;
+    int numberOfSeats;
+    TractionEnum traction;
+    FuelEnum fuel;
+    String color;
+    int numberOfDoors;
+    TypeEnum type;
+    StatusEnum status;
+    Supplier supplier;
+    ConditionEnum condition;
+    Stand stand;
+    int transaction;
 
-    public VehicleModel getModel() {
-        return model;
-    }
-
-    public String getLicensePlate() {
-        return licensePlate;
-    }
-
-    public FuelEnum getFuel() {
-        return fuel;
-    }
-
-    public TypeEnum getType() {
-        return type;
-    }
-
-    public StatusEnum getStatus() {
-        return status;
-    }
-
-    public Supplier getSuplier() {
-        return supplier;
-    }
-
-    public ConditionEnum getCondition() {
-        return conditionEnum;
+    public static VehicleDTO toVehicleDTO(Vehicle v){
+        return new VehicleDTO(v.getId(), v.getModel(), v.getLicensePlate(), v.getNumberOfSeats(), v.getTraction(), v.getFuel(), v.getColor(),  v.getNumberOfDoors(), v.getType(), v.getStatus(), v.getSupplier(), v.getCondition(),  v.getStand(), v.getTransaction());
     }
 
 }

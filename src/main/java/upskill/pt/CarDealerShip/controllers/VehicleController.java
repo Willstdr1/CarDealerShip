@@ -1,30 +1,55 @@
 package upskill.pt.CarDealerShip.controllers;
 
 import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import upskill.pt.CarDealerShip.dto.StatusDTO;
+import upskill.pt.CarDealerShip.dto.VehicleDTO;
 import upskill.pt.CarDealerShip.models.Vehicle;
 import upskill.pt.CarDealerShip.services.VehicleApi;
 
+import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/")
 public class VehicleController {
     @Autowired
-    VehicleApi storage; // não precisa de ter o nome do "VehicleApi" o nome da interface é melhor
+    VehicleApi storage; // não precisa de ter o nome do "VehicleApImpl" o nome da interface é melhor
 
-    @GetMapping(value= "/vehicles/{page}", produces = "application/json")
-    public ResponseEntity<List<Vehicle>> getVehicles(@PathVariable("page") int page){
-        List<Vehicle> v = storage.listVehicles(page);
+    @GetMapping("/vehicles")
+    public ResponseEntity<CollectionModel<VehicleDTO>> getVehicles(@RequestParam(name = "page") Optional<Integer> page,
+                                                                   @RequestParam(name = "size") Optional<Integer> size,
+                                                                   @RequestParam(name = "sort")  Optional<String> sort){
+        int _page = page.orElse(0);
+        int _size = size.orElse(10);
+        String _sort = sort.orElse("id");
 
-        return new ResponseEntity<>(v, HttpStatus.OK);
-        //ToDo: exexon
+        Page<VehicleDTO> vei = this.storage.listVehicles(_page, _size, _sort);
+        vei = vei.map((VehicleDTO v)-> v.add(linkTo(methodOn(VehicleController.class).getVehicles(page, size, sort)).withSelfRel()));
+        Link link = linkTo(methodOn(VehicleController.class).getVehicles(Optional.of(1),Optional.of(10), Optional.of("id"))).withSelfRel();
+        List<Link> links = new ArrayList<>();
+        links.add(link);
+        if(!vei.isLast()) {
+            Link _link = linkTo(methodOn(VehicleController.class).getVehicles(Optional.of(_page + 1), size, Optional.of("id"))).withRel("next");
+            links.add(_link);
+        }
+        if(!vei.isFirst()) {
+            Link _link = linkTo(methodOn(VehicleController.class).getVehicles(Optional.of(_page - 1), size, Optional.of("id"))).withRel("previous");
+            links.add(_link);
+        }
+        return ResponseEntity.ok(CollectionModel.of(vei.toList(), links));
     }
 
     @GetMapping(value= "/vehicle/{id}", produces = "application/json")

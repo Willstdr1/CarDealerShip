@@ -28,8 +28,9 @@ public class Vehicle {
     private ConditionEnum condition;
     @ManyToOne(cascade = CascadeType.ALL)
     private Stand stand;
+    private int transaction;
 
-    public Vehicle(int id, VehicleModel model, String licensePlate, int numberOfSeats, TractionEnum traction, FuelEnum fuel, String color, int numberOfDoors, TypeEnum type, StatusEnum status, Supplier supplier, ConditionEnum condition, Stand stand) {
+    public Vehicle(int id, VehicleModel model, String licensePlate, int numberOfSeats, TractionEnum traction, FuelEnum fuel, String color, int numberOfDoors, TypeEnum type, StatusEnum status, Supplier supplier, ConditionEnum condition, Stand stand, int transaction) {
         this.id = id;
         this.model = model;
         this.licensePlate = licensePlate;
@@ -43,12 +44,16 @@ public class Vehicle {
         this.supplier = supplier;
         this.condition = condition;
         this.stand = stand;
-        //ToDo: id comprador e id transação
+        this.transaction = transaction;
 
     }
 
 
     public Vehicle() {
+    }
+
+    public int getTransaction() {
+        return transaction;
     }
 
     public int getId() {
@@ -89,7 +94,7 @@ public class Vehicle {
         return status;
     }
 
-    public Supplier getSuplier() {
+    public Supplier getSupplier() {
         return supplier;
     }
 
@@ -146,12 +151,16 @@ public class Vehicle {
         this.status = status;
     }
 
-    public void setSuplier(Supplier supplier) {
+    public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
     }
 
     public void setCondition(ConditionEnum conditionEnum) {
         this.condition = conditionEnum;
+    }
+
+    public void setTransaction(int transaction) {
+        this.transaction = transaction;
     }
 
 }

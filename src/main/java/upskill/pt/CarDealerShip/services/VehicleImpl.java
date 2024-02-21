@@ -3,8 +3,13 @@ package upskill.pt.CarDealerShip.services;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.NotImplementedException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import upskill.pt.CarDealerShip.dto.VehicleDTO;
 import upskill.pt.CarDealerShip.enums.StatusEnum;
 import upskill.pt.CarDealerShip.models.Vehicle;
 import upskill.pt.CarDealerShip.services.repos.VehicleRepository;
@@ -31,8 +36,8 @@ public class VehicleImpl implements VehicleApi {
         storage.save(vehicle);
     }
 
-    @Override
-    public List<Vehicle> listVehicles(int page) {
+/*    @Override
+    public List<Vehicle> listVehicles(int page, int size) {
         int[] a = new int []{0,0};
         if(page==1){
             a[1]=99;
@@ -42,6 +47,12 @@ public class VehicleImpl implements VehicleApi {
         }
 
         return storage.findAll().subList(a[0],Math.min(a[1] + 1, storage.findAll().size())) ;
+    }*/
+
+    @Override
+    public Page<VehicleDTO> listVehicles(int page, int size, String sort) {
+        return this.storage.findAll(PageRequest.of(page, size, Sort.by(sort))).map(VehicleDTO::toVehicleDTO) ;
+
     }
 
     @Override
@@ -68,7 +79,7 @@ public class VehicleImpl implements VehicleApi {
                 veic.setNumberOfDoors(vehicle.getNumberOfDoors());
                 veic.setType(vehicle.getType());
                 veic.setStatus(vehicle.getStatus());
-                veic.setSuplier(vehicle.getSuplier());
+                veic.setSupplier(vehicle.getSupplier());
                 veic.setCondition(vehicle.getCondition());
                 veic.setStand(vehicle.getStand());
             }

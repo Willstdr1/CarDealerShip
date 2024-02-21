@@ -36,19 +36,6 @@ public class VehicleImpl implements VehicleApi {
         storage.save(vehicle);
     }
 
-/*    @Override
-    public List<Vehicle> listVehicles(int page, int size) {
-        int[] a = new int []{0,0};
-        if(page==1){
-            a[1]=99;
-        }else{
-            a[0]=page*100-100;
-            a[1]=page*100-1;
-        }
-
-        return storage.findAll().subList(a[0],Math.min(a[1] + 1, storage.findAll().size())) ;
-    }*/
-
     @Override
     public Page<VehicleDTO> listVehicles(int page, int size, String sort) {
         return this.storage.findAll(PageRequest.of(page, size, Sort.by(sort))).map(VehicleDTO::toVehicleDTO) ;
@@ -92,7 +79,6 @@ public class VehicleImpl implements VehicleApi {
     @Transactional
     @Override
     public Vehicle deleteVehicle(int id) {
-     //   if (storage.existsById(id)) {
             Vehicle v = storage.findById(id).orElse(null);
             if (v != null) {
                 storage.delete(v);
@@ -100,9 +86,6 @@ public class VehicleImpl implements VehicleApi {
             } else {
                 throw new EntityNotFoundException("Vehicle with ID " + id + " not found.");
             }
-  /*      } else {
-            throw new EntityNotFoundException("Vehicle with ID " + id + " not found.");
-        }*/
     }
 
 
@@ -118,18 +101,6 @@ public class VehicleImpl implements VehicleApi {
         }
     }
 
-/*    @Override
-    public Vehicle markVeAsSold(int id, StatusEnum newStatus){
-            Vehicle existVehicle = storage.findById(vehicle.getId()).orElse(null);
-            StatusEnum[] statusValues = StatusEnum.values();
-            if (existVehicle != null) {
-                existVehicle.setStatus(statusValues[3]); // valor do enum sold
-                return storage.save(existVehicle);
-            } else {
-                throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
-            }
-    }*/
-
     @Transactional
     @Override
     public Vehicle markVeAsSold(int id) {
@@ -138,8 +109,6 @@ public class VehicleImpl implements VehicleApi {
         existVehicle.setStatus(StatusEnum.SOLD);
         return storage.save(existVehicle);
     }
-
-
 
     @Override
     public List<Vehicle> listVehiclesInStock() {

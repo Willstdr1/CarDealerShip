@@ -1,6 +1,7 @@
 package upskill.pt.CarDealerShip.services;
 
 
+import jakarta.transaction.Status;
 import org.springframework.data.domain.Page;
 import upskill.pt.CarDealerShip.dto.VehicleDTO;
 import upskill.pt.CarDealerShip.enums.StatusEnum;
@@ -15,11 +16,12 @@ public interface VehicleApi {
     public Vehicle updateVehicle(Vehicle vehicle);
     public Vehicle deleteVehicle(int id);
     public Vehicle changeVehicleStatus(int id, StatusEnum newStatus);
-    public Vehicle markVeAsSold(int id);
-    public List<Vehicle> listVehiclesInStock();
-    public List<Vehicle> listVehiclesSold();
-    public List<Vehicle> listVehiclesBought();
-    public List<Vehicle> listVehiclesAsProcessing();
+    public Vehicle markVeAsSold(int id, int transactionID);
+
+    public Page<VehicleDTO> listVehiclesByStatus(StatusEnum status, int page, int size, String sort);
+    public Page<VehicleDTO> listVehicleByTransaction(int transaction, int page, int size, String sort);
+    public Page<VehicleDTO> listVehicleByBrandId(int brandID, int page, int size, String sort);
+
 
 
 

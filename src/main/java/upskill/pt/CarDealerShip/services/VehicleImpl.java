@@ -1,6 +1,7 @@
 package upskill.pt.CarDealerShip.services;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Status;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -103,56 +104,30 @@ public class VehicleImpl implements VehicleApi {
 
     @Transactional
     @Override
-    public Vehicle markVeAsSold(int id) {
+    public Vehicle markVeAsSold(int id, int transactionID) {
         Vehicle existVehicle = storage.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Vehicle with ID " + id + " not found."));
         existVehicle.setStatus(StatusEnum.SOLD);
+        existVehicle.setTransaction(transactionID);
         return storage.save(existVehicle);
     }
 
+
     @Override
-    public List<Vehicle> listVehiclesInStock() {
-        List<Vehicle> vehiclesInStock = new ArrayList<>();
-        for (Vehicle vehicle : storage.findAll()) {
-            if (vehicle.getStatus().ordinal() == 2) {
-                vehiclesInStock.add(vehicle);
-            }
-        }
-        return vehiclesInStock;
+    public Page<VehicleDTO> listVehiclesByStatus(StatusEnum status, int page, int size, String sort){
+        return storage.findByStatus(status, PageRequest.of(page,size, Sort.by(sort))).map(VehicleDTO::toVehicleDTO);
     }
 
     @Override
-    public List<Vehicle> listVehiclesSold() {
-        List<Vehicle> vehiclesSold = new ArrayList<>();
-        for (Vehicle vehicle : storage.findAll()) {
-            if (vehicle.getStatus().ordinal() == 3) {
-                vehiclesSold.add(vehicle);
-            }
-        }
-        return vehiclesSold;
+    public Page<VehicleDTO> listVehicleByTransaction(int transaction, int page, int size, String sort){
+        return storage.findByTransaction(transaction, PageRequest.of(page, size, Sort.by(sort))).map(VehicleDTO::toVehicleDTO);
     }
 
     @Override
-    public List<Vehicle> listVehiclesBought() {
-        List<Vehicle> vehiclesBought = new ArrayList<>();
-        for (Vehicle vehicle : storage.findAll()) {
-            if (vehicle.getStatus().ordinal() == 0) {
-                vehiclesBought.add(vehicle);
-            }
-        }
-        return vehiclesBought;
+    public Page<VehicleDTO> listVehicleByBrandId(int brandID, int page, int size, String sort){
+        return storage.findByBrandId(brandID, PageRequest.of(page, size, Sort.by(sort))).map(VehicleDTO::toVehicleDTO);
     }
 
-    @Override
-    public List<Vehicle> listVehiclesAsProcessing() {
-        List<Vehicle> vehiclesProcessing = new ArrayList<>();
-        for (Vehicle vehicle : storage.findAll()) {
-            if (vehicle.getStatus().ordinal() == 1) {
-                vehiclesProcessing.add(vehicle);
-            }
-        }
-        return vehiclesProcessing;
-    }
 
 
     //@Transactional ou vai tudo ou nada da info

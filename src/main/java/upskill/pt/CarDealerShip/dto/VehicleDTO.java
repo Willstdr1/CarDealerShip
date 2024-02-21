@@ -37,4 +37,8 @@ public class VehicleDTO extends RepresentationModel<VehicleDTO> {
         return new VehicleDTO(v.getId(), v.getModel(), v.getLicensePlate(), v.getNumberOfSeats(), v.getTraction(), v.getFuel(), v.getColor(),  v.getNumberOfDoors(), v.getType(), v.getStatus(), v.getSupplier(), v.getCondition(),  v.getStand(), v.getTransaction());
     }
 
+    public static Vehicle toVehicle(VehicleDTO v){
+        return new Vehicle(v.getId(), v.getModel(), v.getLicensePlate(), v.getNumberOfSeats(), v.getTraction(), v.getFuel(), v.getColor(),  v.getNumberOfDoors(), v.getType(), v.getStatus(), v.getSupplier(), v.getCondition(),  v.getStand(), v.getTransaction());
+    }
+
 }

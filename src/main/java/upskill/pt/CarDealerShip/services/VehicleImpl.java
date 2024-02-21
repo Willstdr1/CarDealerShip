@@ -28,6 +28,7 @@ public class VehicleImpl implements VehicleApi {
     this.storage = storage;
     }
 
+    @Transactional
     @Override
     public void createVehicle(Vehicle vehicle) {
         if(storage.existsById(vehicle.getId())){

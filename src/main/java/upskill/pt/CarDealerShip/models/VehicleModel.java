@@ -9,7 +9,7 @@ public class VehicleModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Brand brand;
     private String name;
 

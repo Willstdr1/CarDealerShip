@@ -8,7 +8,7 @@ public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private VehicleModel model;
     private String licensePlate;
     private double initialPrice;
@@ -27,7 +27,7 @@ public class Vehicle {
     private Supplier supplier;
     @Enumerated(EnumType.STRING)
     private ConditionEnum condition;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Stand stand;
     private int transaction;
 

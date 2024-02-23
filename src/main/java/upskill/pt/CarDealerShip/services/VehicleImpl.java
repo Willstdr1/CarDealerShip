@@ -2,7 +2,6 @@ package upskill.pt.CarDealerShip.services;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Status;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -16,8 +15,7 @@ import upskill.pt.CarDealerShip.enums.StatusEnum;
 import upskill.pt.CarDealerShip.models.Vehicle;
 import upskill.pt.CarDealerShip.services.repos.VehicleRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VehicleImpl implements VehicleApi {
@@ -84,17 +82,28 @@ public class VehicleImpl implements VehicleApi {
         throw new EntityNotFoundException("Vehicle with ID " + vehicle.getId() + " not found.");
     }
 
-    @Transactional
     @Override
-    public Vehicle deleteVehicle(int id) {
-            Vehicle v = storage.findById(id).orElse(null);
-            if (v != null) {
-                storage.delete(v);
-                return v;
-            } else {
-                throw new EntityNotFoundException("Vehicle with ID " + id + " not found.");
-            }
+    @Transactional
+    public VehicleDTO deleteVehicle(int id) {
+        if (storage.existsById(id)) {
+            VehicleDTO vDto= VehicleDTO.toVehicleDTO(storage.findById(id).get());
+            storage.delete(storage.findById(id).get());
+            return vDto;
+
+        } else {
+            throw new EntityNotFoundException("Vehicle with ID " + id + " not found.");
+        }
     }
+
+/*    public VehicleDTO deleteVehicle(int id) {
+        Vehicle v = storage.findById(id).orElse(null);
+        if(v!=null){
+            storage.deleteById(id);
+            return VehicleDTO.toVehicleDTO(v);
+        } else {
+            throw new EntityNotFoundException("Vehicle with ID " + id + " not found.");
+        }
+    }*/
 
 
     @Transactional

@@ -78,13 +78,15 @@ public class VehicleController {
     }
 
 
-    @DeleteMapping(value= "/vehicle/{id}", produces = "aplication/json")
-    public ResponseEntity<Vehicle> deleteVehicle(@PathVariable("id") int id){
-        if (id>=0){
-            storage.deleteVehicle(id);
-                return new ResponseEntity<>(storage.deleteVehicle(id), HttpStatus.OK);
-        }
+    @DeleteMapping(value= "/vehicle/{id}")
+    public ResponseEntity<VehicleDTO> deleteVehicle(@PathVariable("id") int id){
+        VehicleDTO deletedVehicle = storage.deleteVehicle(id);
+
+        if (deletedVehicle==null){
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(deletedVehicle, HttpStatus.OK);
     }
 
 

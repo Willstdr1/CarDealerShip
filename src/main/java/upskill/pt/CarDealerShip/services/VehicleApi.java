@@ -10,7 +10,7 @@ import upskill.pt.CarDealerShip.models.Vehicle;
 import java.util.List;
 
 public interface VehicleApi {
-    public void createVehicle(Vehicle vehicle); //create
+    public VehicleDTO createVehicle(Vehicle vehicle);
     public Page<VehicleDTO> listVehicles(int page, int size, String sort);
     public Vehicle listVehicle(int id);
     public Vehicle updateVehicle(Vehicle vehicle);

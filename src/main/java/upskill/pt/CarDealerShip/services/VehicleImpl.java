@@ -1,5 +1,6 @@
 package upskill.pt.CarDealerShip.services;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Status;
 import jakarta.transaction.Transactional;
@@ -30,13 +31,18 @@ public class VehicleImpl implements VehicleApi {
 
     @Transactional
     @Override
-    public void createVehicle(Vehicle vehicle) {
-        if(storage.existsById(vehicle.getId())){
-            throw new NotImplementedException();
+    public VehicleDTO createVehicle(Vehicle vehicle) {
+        if (storage.existsById(vehicle.getId())) {
+            throw new EntityExistsException("Vehicle with ID " + vehicle.getId() + " already exists.");
         }
 
+        VehicleDTO v2 = new VehicleDTO();
+
         storage.save(vehicle);
+
+        return  VehicleDTO.toVehicleDTO(vehicle);
     }
+
 
     @Override
     public Page<VehicleDTO> listVehicles(int page, int size, String sort) {

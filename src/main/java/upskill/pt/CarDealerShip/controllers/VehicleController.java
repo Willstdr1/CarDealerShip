@@ -63,9 +63,9 @@ public class VehicleController {
 
 
     @PostMapping(value= "/vehicle", consumes = "application/json", produces = "aplication/json")
-    public ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle){
-        storage.createVehicle(vehicle);
-        return new ResponseEntity<>(vehicle, HttpStatus.OK);
+    public ResponseEntity<VehicleDTO> createVehicle(@RequestBody Vehicle vehicle){
+        VehicleDTO temp = storage.createVehicle(vehicle);
+        return new ResponseEntity<VehicleDTO>(temp, HttpStatus.OK);
     }
 
 

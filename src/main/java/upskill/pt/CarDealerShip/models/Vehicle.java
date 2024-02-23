@@ -11,29 +11,31 @@ public class Vehicle {
     @ManyToOne(cascade = CascadeType.ALL)
     private VehicleModel model;
     private String licensePlate;
+    private double initialPrice;
     private int numberOfSeats;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private TractionEnum traction;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private FuelEnum fuel;
     private String color;
     private int numberOfDoors;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private TypeEnum type;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private StatusEnum status;
     @ManyToOne
     private Supplier supplier;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private ConditionEnum condition;
     @ManyToOne(cascade = CascadeType.ALL)
     private Stand stand;
     private int transaction;
 
-    public Vehicle(int id, VehicleModel model, String licensePlate, int numberOfSeats, TractionEnum traction, FuelEnum fuel, String color, int numberOfDoors, TypeEnum type, StatusEnum status, Supplier supplier, ConditionEnum condition, Stand stand, int transaction) {
+    public Vehicle(int id, VehicleModel model, String licensePlate, double initialPrice, int numberOfSeats, TractionEnum traction, FuelEnum fuel, String color, int numberOfDoors, TypeEnum type, StatusEnum status, Supplier supplier, ConditionEnum condition, Stand stand, int transaction) {
         this.id = id;
         this.model = model;
         this.licensePlate = licensePlate;
+        this.initialPrice = initialPrice;
         this.numberOfSeats = numberOfSeats;
         this.traction = traction;
         this.fuel = fuel;
@@ -45,9 +47,7 @@ public class Vehicle {
         this.condition = condition;
         this.stand = stand;
         this.transaction = transaction;
-
     }
-
 
     public Vehicle() {
     }
@@ -92,6 +92,10 @@ public class Vehicle {
 
     public StatusEnum getStatus() {
         return status;
+    }
+
+    public double getInitialPrice() {
+        return initialPrice;
     }
 
     public Supplier getSupplier() {
@@ -163,4 +167,7 @@ public class Vehicle {
         this.transaction = transaction;
     }
 
+    public void setInitialPrice(double initialPrice) {
+        this.initialPrice = initialPrice;
+    }
 }

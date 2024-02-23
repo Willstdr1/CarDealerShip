@@ -21,6 +21,7 @@ public class VehicleDTO extends RepresentationModel<VehicleDTO> {
     int id;
     VehicleModel model;
     String licensePlate;
+    double initialPrice;
     int numberOfSeats;
     TractionEnum traction;
     FuelEnum fuel;
@@ -33,12 +34,30 @@ public class VehicleDTO extends RepresentationModel<VehicleDTO> {
     Stand stand;
     int transaction;
 
-    public static VehicleDTO toVehicleDTO(Vehicle v){
-        return new VehicleDTO(v.getId(), v.getModel(), v.getLicensePlate(), v.getNumberOfSeats(), v.getTraction(), v.getFuel(), v.getColor(),  v.getNumberOfDoors(), v.getType(), v.getStatus(), v.getSupplier(), v.getCondition(),  v.getStand(), v.getTransaction());
+    public static VehicleDTO toVehicleDTO(Vehicle vehicle){
+        return new VehicleDTO(vehicle.getId(), vehicle.getModel(), vehicle.getLicensePlate(), vehicle.getInitialPrice(), vehicle.getNumberOfSeats(), vehicle.getTraction(), vehicle.getFuel(), vehicle.getColor(),  vehicle.getNumberOfDoors(), vehicle.getType(), vehicle.getStatus(), vehicle.getSupplier(), vehicle.getCondition(),  vehicle.getStand(), vehicle.getTransaction());
     }
 
-    public static Vehicle toVehicle(VehicleDTO v){
-        return new Vehicle(v.getId(), v.getModel(), v.getLicensePlate(), v.getNumberOfSeats(), v.getTraction(), v.getFuel(), v.getColor(),  v.getNumberOfDoors(), v.getType(), v.getStatus(), v.getSupplier(), v.getCondition(),  v.getStand(), v.getTransaction());
-    }
+/*    public static Vehicle toVehicle(VehicleDTO vehicleDTO){
+        Vehicle vehicle = new Vehicle();
+
+        if(vehicleDTO!=null){
+            vehicle.setId(vehicleDTO.getId());
+            vehicle.setModel(vehicleDTO.getModel());
+            vehicle.setLicensePlate(vehicleDTO.getLicensePlate());
+            vehicle.setNumberOfSeats(vehicleDTO.getNumberOfSeats());
+            vehicle.setTraction(vehicleDTO.getTraction());
+            vehicle.setFuel(vehicleDTO.getFuel());
+            vehicle.setColor(vehicleDTO.getColor());
+            vehicle.setNumberOfDoors(vehicleDTO.getNumberOfDoors());
+            vehicle.setType(vehicleDTO.getType());
+            vehicle.setStatus(vehicleDTO.getStatus());
+            vehicle.setSupplier(vehicleDTO.getSupplier());
+            vehicle.setCondition(vehicleDTO.getCondition());
+            vehicle.setStand(vehicleDTO.getStand());
+            vehicle.setTransaction(vehicleDTO.getTransaction());
+        }
+        return vehicle;
+    }*/
 
 }
